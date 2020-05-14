@@ -1,0 +1,9 @@
+server:
+  port: 8002
+
+mina-port: 7020
+spring:
+  redis:
+    host: 183.56.219.211
+    port: 6379
+

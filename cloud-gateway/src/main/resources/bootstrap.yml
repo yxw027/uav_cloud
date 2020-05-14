@@ -1,0 +1,19 @@
+server:
+  port: 80
+
+spring:
+  cloud:
+    nacos:
+      server-addr: 183.56.219.211:8848
+      config:
+        server-addr: 183.56.219.211:8848
+    gateway:
+      routes: #越精确的断言规则越往前提，才能先拦截
+        - id: admin_route
+          uri: lb:// #负载均衡到注册中心去找对应服务名的项目
+          predicates:
+            - Path=/api/**
+          filters: #重写路径
+            - RewritePath=/api/(?<segment>.*), /renren-fast/$\{segment}
+  application:
+    name: cloud-gateway
