@@ -89,6 +89,7 @@ public class RedisUtil {
     }
 
     public boolean set (String key,Object value) {
+        System.out.println(111111111);
         try {
             redisTemplate.opsForValue().set(key,value);
             return true;

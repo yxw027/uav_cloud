@@ -29,7 +29,7 @@ public class TextDecoder implements ProtocolDecoder {
         int startPos = in.position();
         while(in.hasRemaining()){
             byte b = in.get();
-            if (b == ']') {
+            if (b == '\n') {
                 int pos = in.position();
                 int limit = in.limit();
 
@@ -41,7 +41,7 @@ public class TextDecoder implements ProtocolDecoder {
                 //2.截取
                 IoBuffer buff = in.slice();
                 // -2 不包含换行符和结束符
-                byte[] bytes = new byte[limit];
+                byte[] bytes = new byte[limit-2];
                 buff.get(bytes);
 
                 //3.解码

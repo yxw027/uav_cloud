@@ -2,11 +2,13 @@ package com.ccssoft.cloudmessagemachine.mina.handler;
 
 import com.ccssoft.cloudmessagemachine.mina.comon.ComonUtils;
 import com.ccssoft.cloudmessagemachine.mina.iosession.IOSessionManager;
+import com.ccssoft.cloudmessagemachine.redis.until.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
+import javax.annotation.Resource;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
@@ -16,7 +18,8 @@ import java.net.InetSocketAddress;
  */
 @Slf4j
 public class MinaServerHandler extends IoHandlerAdapter {
-
+    @Resource
+    RedisUtil redisUtil;
     /**
      * 会话创建
      * @param session
@@ -88,9 +91,16 @@ public class MinaServerHandler extends IoHandlerAdapter {
      */
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
+        System.out.println("收到消息");
         // 读取客户端消息
         String str = message.toString();
-        log.info("Message from session ["+session.getId()+"]: " + ComonUtils.toMessageWeNeed(str,session));
+        str = ComonUtils.toMessageWeNeed(str,session);
+        System.out.println(str);
+        String[] split = str.split(":");
+        String id = split[1].split(",")[0];
+        String point = split[3].split(",")[0];
+        redisUtil.set(id,point);
+        log.info("Message from session ["+session.getId()+"]: "+str);
         // 给客户端返回数据
 //        session.write();
     }
