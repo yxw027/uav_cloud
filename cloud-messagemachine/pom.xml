@@ -19,6 +19,22 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <!--thymeleaf模板引擎，无需再引入web模块-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!--jedis，好像mina框架里不支持redisTemplate-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+        <!--本地统一依赖包-->
         <dependency>
             <groupId>com.ccssoft</groupId>
             <artifactId>cloud-common</artifactId>
@@ -53,6 +69,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
