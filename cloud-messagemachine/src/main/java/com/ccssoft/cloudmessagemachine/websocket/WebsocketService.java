@@ -1,7 +1,6 @@
 package com.ccssoft.cloudmessagemachine.websocket;
 
-import com.alibaba.fastjson.JSONObject;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -14,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2020/5/15 16:26
  */
 @ServerEndpoint(value="/websocket/{username}")
-@Service
+@Component
 public class WebsocketService {
 
     private static int onlineCount = 0;
