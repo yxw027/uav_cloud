@@ -1,6 +1,5 @@
 package com.ccssoft.cloudmessagemachine.mina.handler;
 
-import com.ccssoft.cloudmessagemachine.comon.AltitudeUtil;
 import com.ccssoft.cloudmessagemachine.entity.Message;
 import com.ccssoft.cloudmessagemachine.mina.comon.ComonUtils;
 import com.ccssoft.cloudmessagemachine.mina.iosession.IOSessionManager;
@@ -55,10 +54,11 @@ public class MinaServerHandler extends IoHandlerAdapter {
     public void sessionClosed(IoSession session) throws Exception {
         super.sessionClosed(session);
         log.info("sessionClosed");
-        IOSessionManager.removeSession(session);
+        //通知前端
         WebsocketService websocketService = new WebsocketService();
-        //暂时先只发位置过去就行
-        websocketService.sendMessageAll(String.valueOf(IOSessionManager.getId(session)));
+        websocketService.sendMessageAll(String.valueOf(IOSessionManager.getId(session))+":offline");
+        //从管理器删除
+        IOSessionManager.removeSession(session);
     }
 
     /**
@@ -99,11 +99,11 @@ public class MinaServerHandler extends IoHandlerAdapter {
         String str = message.toString();
         Message messageWeNeed = ComonUtils.toMessageWeNeed(str,session);
         log.info("Message from session ["+session.getId()+"]: "+messageWeNeed.toString());
-        savaData(messageWeNeed);
+//        savaData(messageWeNeed);
         WebsocketService websocketService = new WebsocketService();
         //暂时先只发位置过去就行
         if ("UD".equals(messageWeNeed.getType())) {
-            websocketService.sendMessageAll(messageWeNeed.getId()+":"+messageWeNeed.getCoordinate());
+            websocketService.sendMessageAll(messageWeNeed.getId()+":"+messageWeNeed.getCoordinate()+",speed:"+messageWeNeed.getSpeed()+"km/h,height:"+messageWeNeed.getAltitude());
         }
 
 
