@@ -1,5 +1,6 @@
 package com.ccssoft.cloudmessagemachine.mina.comon;
 
+import com.ccssoft.cloudmessagemachine.comon.AltitudeUtil;
 import com.ccssoft.cloudmessagemachine.entity.Message;
 import com.ccssoft.cloudmessagemachine.mina.iosession.IOSessionManager;
 import org.apache.mina.core.session.IoSession;
@@ -25,23 +26,24 @@ public class ComonUtils {
         String head = split[0];
         String id = head.split("\\*")[1];
         IOSessionManager.addSession(Long.valueOf(id),session);
-        String status = head.split("\\*")[3];
-        if ("UD".equals(status)) {
+        String type = head.split("\\*")[3];
+        if ("UD".equals(type)) {
             String t1 = split[1];
             String t2 = split[2];
             String data = t1.charAt(4)+""+t1.charAt(5)+"-"+t1.charAt(2)+t1.charAt(3)+"-"+t1.charAt(0)+t1.charAt(1);
             String s = "" + t2.charAt(0) + t2.charAt(1);
             String s1 = Integer.parseInt(s) + 8 + ":" + t2.charAt(2) + t2.charAt(3) +":"+ t2.charAt(4) + t2.charAt(5);
             Timestamp time = Timestamp.valueOf("20"+data+" "+s1);
-            Message message = new Message(id,"["+split[4]+" "+split[6]+"]",split[3],split[8],split[9],split[10],split[13],time,"");
+            AltitudeUtil.SelectAltitude(Double.valueOf(split[6]),Double.valueOf(split[4]));
+            Message message = new Message(id,type,"["+split[4]+" "+split[6]+"]",split[3],split[8],split[9],split[10],split[13],time,"");
             return message;
-        } else if ("LK]".equals(status) || "LK".equals(status)) {
+        } else if ("LK]".equals(type) || "LK".equals(type)) {
             session.write("[3G*"+id+"*0002*LK]");
-            return new Message("链路保持成功！");
-        } else if ("RESET]".equals(status)) {
-            return new Message("盒子现在开始重启");
+            return new Message(id+"链路保持成功！");
+        } else if ("RESET]".equals(type)) {
+            return new Message(id+"盒子现在开始重启");
         }
-        return new Message("收到标示号异常，请检查！");
+        return new Message(id+"收到标示号异常，请检查！");
     }
 
     /**

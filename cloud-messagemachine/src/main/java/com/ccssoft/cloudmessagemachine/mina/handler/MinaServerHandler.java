@@ -1,5 +1,6 @@
 package com.ccssoft.cloudmessagemachine.mina.handler;
 
+import com.ccssoft.cloudmessagemachine.comon.AltitudeUtil;
 import com.ccssoft.cloudmessagemachine.entity.Message;
 import com.ccssoft.cloudmessagemachine.mina.comon.ComonUtils;
 import com.ccssoft.cloudmessagemachine.mina.iosession.IOSessionManager;
@@ -55,6 +56,9 @@ public class MinaServerHandler extends IoHandlerAdapter {
         super.sessionClosed(session);
         log.info("sessionClosed");
         IOSessionManager.removeSession(session);
+        WebsocketService websocketService = new WebsocketService();
+        //暂时先只发位置过去就行
+        websocketService.sendMessageAll(String.valueOf(IOSessionManager.getId(session)));
     }
 
     /**
@@ -94,11 +98,14 @@ public class MinaServerHandler extends IoHandlerAdapter {
         // 读取客户端消息
         String str = message.toString();
         Message messageWeNeed = ComonUtils.toMessageWeNeed(str,session);
-        savaData(messageWeNeed);
         log.info("Message from session ["+session.getId()+"]: "+messageWeNeed.toString());
+        savaData(messageWeNeed);
         WebsocketService websocketService = new WebsocketService();
         //暂时先只发位置过去就行
-        websocketService.sendMessageAll(messageWeNeed.getId()+":"+messageWeNeed.getCoordinate());
+        if ("UD".equals(messageWeNeed.getType())) {
+            websocketService.sendMessageAll(messageWeNeed.getId()+":"+messageWeNeed.getCoordinate());
+        }
+
 
         // 给客户端返回数据
 //        session.write();
@@ -132,13 +139,16 @@ public class MinaServerHandler extends IoHandlerAdapter {
      * @param message
      */
     private void savaData(Message message) {
-        String id = message.getId();
-        String point = message.getCoordinate();
-        if (Double.valueOf(message.getSpeed()) >4.0 && !StringUtil.isNullOrEmpty(jedis.get(id))) {
-            jedis.set(id, point);
-        } else if (Double.valueOf(message.getSpeed()) > 4.0 && StringUtil.isNullOrEmpty(jedis.get(id))) {
-            jedis.append(id, ","+point);
+        if ("UD".equals(message.getType())) {
+            String id = message.getId();
+            String point = message.getCoordinate();
+            if (Double.valueOf(message.getSpeed()) >4.0 && !StringUtil.isNullOrEmpty(jedis.get(id))) {
+                jedis.set(id, point);
+            } else if (Double.valueOf(message.getSpeed()) > 4.0 && StringUtil.isNullOrEmpty(jedis.get(id))) {
+                jedis.append(id, ","+point);
+            }
+            //TODO 之后可以在这里加else如果速度和高度没达标就持久化到mysql并且删除redis里的数据，算完成一段任务,还要往前端发送一个结束的标签，不在地图上继续显示这趟航程
         }
-        //TODO 之后可以在这里加else如果速度和高度没达标就持久化到mysql并且删除redis里的数据，算完成一段任务,还要往前端发送一个结束的标签，不在地图上继续显示这趟航程
+
     }
 }

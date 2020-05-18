@@ -53,4 +53,8 @@ public class IOSessionManager {
     public static IoSession getSession (Long id) {
         return idMap.get(id);
     }
+
+    public static Long getId(IoSession session) {
+        return sessionMap.get(session);
+    }
 }

@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Message {
     private String id;
+    private String type;
     private String coordinate;
     private String statuss;
     private String speed;
