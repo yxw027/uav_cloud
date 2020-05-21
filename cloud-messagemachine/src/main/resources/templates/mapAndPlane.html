@@ -26,7 +26,7 @@
 
     $("#btnConnection").click(function() {
         //实现化WebSocket对象，指定要连接的服务器地址与端口
-        socket = new WebSocket("ws://localhost:8002/websocket/"+(Math.random()*10000000).toString(16).substr(0,4)+'-'+(new Date()).getTime()+'-'+Math.random().toString().substr(2,5));
+        socket = new WebSocket("ws://183.56.219.211:8002/websocket/"+(Math.random()*10000000).toString(16).substr(0,4)+'-'+(new Date()).getTime()+'-'+Math.random().toString().substr(2,5));
         //打开事件
         socket.onopen = function() {
             alert("Socket 已打开");

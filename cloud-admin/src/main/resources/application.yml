@@ -1,0 +1,30 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: admin-server
+  datasource:
+    url: jdbc:mysql://183.56.219.211:33066/uav_cloud?useUnicode=true&characterEncoding=utf8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+  redis:
+    port: 6379
+    host: 183.56.219.211
+    timeout: 30000
+    database: 0
+    jedis:
+      pool:
+        min-idle: 10000
+  session:
+    store-type: redis
+
+
+mybatis-plus:
+  type-aliases-package: com.ccssoft.cloudadmin.model
+  mapper-locations: classpath:mybatis-mappers/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 1 #逻辑删除
+      logic-not-delete-value: 0 #逻辑未删除

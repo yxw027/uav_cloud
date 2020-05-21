@@ -99,14 +99,14 @@ public class MinaServerHandler extends IoHandlerAdapter {
         String str = message.toString();
         Message messageWeNeed = ComonUtils.toMessageWeNeed(str,session);
         log.info("Message from session ["+session.getId()+"]: "+messageWeNeed.toString());
-//        savaData(messageWeNeed);
+
         WebsocketService websocketService = new WebsocketService();
         //暂时先只发位置过去就行
         if ("UD".equals(messageWeNeed.getType())) {
-            websocketService.sendMessageAll(messageWeNeed.getId()+":"+messageWeNeed.getCoordinate()+",speed:"+messageWeNeed.getSpeed()+"km/h,height:"+messageWeNeed.getAltitude());
+            websocketService.sendMessageAll(messageWeNeed.getId()+":"+messageWeNeed.getCoordinate()+",speed:"+messageWeNeed.getSpeed()+"km/h,height:"+messageWeNeed.getAltitude()+",power:"+messageWeNeed.getBattery()+"%");
         }
 
-
+        savaData(messageWeNeed);
         // 给客户端返回数据
 //        session.write();
     }

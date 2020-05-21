@@ -2,6 +2,7 @@ package com.ccssoft.cloudmessagemachine.controller;
 
 
 import com.ccssoft.cloudmessagemachine.service.BoxService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -13,7 +14,7 @@ import javax.annotation.Resource;
 @RequestMapping("box/")
 @Controller
 public class InstructionController {
-    @Resource
+    @Autowired
     private BoxService boxService;
 
     @ResponseBody
