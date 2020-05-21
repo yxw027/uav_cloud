@@ -1,6 +1,7 @@
 package com.ccssoft.cloudmessagemachine;
 
 
+import com.ccssoft.cloudmessagemachine.comon.AltitudeUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -10,7 +11,4 @@ class CloudMessagemachineApplicationTests {
     @Test
     void contextLoads() {
     }
-
-
-
 }
