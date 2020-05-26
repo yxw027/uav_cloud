@@ -14,7 +14,7 @@
         insert into sys_user (username,password,name,salt,email,mobile,status,role_id) value (#{username},#{password},#{name},#{salt},#{email},#{mobile},1,#{roleId})
     </insert>
     <update id="updatePasswordByUsername">
-        update
+        update sys_user set password = #{password} where username = #{username}
     </update>
     <select id="getUserById" resultType="com.ccssoft.cloudadmin.entity.User"></select>
     <select id="getUserByUsername" resultType="com.ccssoft.cloudadmin.entity.User">

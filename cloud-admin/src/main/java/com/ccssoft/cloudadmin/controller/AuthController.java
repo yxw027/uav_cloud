@@ -45,8 +45,11 @@ public class AuthController {
 
     }
     @PostMapping("/changePassword")
+    @ResponseBody
     public String changePassword (@RequestBody User user) {
-        if (user.getUsername() != null && user.getPassword() != null) {
+        log.info("进入AuthController.changePassword(),参数="+user.toString());
+        if (user.getUsername() != null && user.getPassword() != null && userService.getUserByUsername(user.getUsername()) != null) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             if (userService.updatePassword(user) == 1) {
                 return "修改成功";
             }
@@ -54,6 +57,14 @@ public class AuthController {
         } else {
             return "账号或密码为空";
         }
+    }
+
+    @PostMapping("/updateInfo")
+    @ResponseBody
+    public String updateInfo (@RequestBody User user) {
+        log.info("进入AuthController.updateInfo(),参数="+user.toString());
+
+
     }
 
     @GetMapping("/login")

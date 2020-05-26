@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/auth/test").authenticated()
                 // 其他都放行了
                 .antMatchers("/consumer/admin/login").permitAll()
-                .antMatchers("/auth/*").permitAll()
+                .antMatchers("/consumer/admin/authenticate").permitAll()
 //                .antMatchers(HttpMethod.DELETE, "/tasks/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()

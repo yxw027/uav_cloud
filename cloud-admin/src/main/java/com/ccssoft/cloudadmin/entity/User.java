@@ -2,6 +2,7 @@ package com.ccssoft.cloudadmin.entity;
 
 import com.ccssoft.cloudcommon.entity.BaseEntity;
 import lombok.Data;
+import lombok.NonNull;
 
 /**
  * @author moriarty
@@ -10,7 +11,7 @@ import lombok.Data;
 @Data
 public class User extends BaseEntity {
     private static final long serialVersionUID = 4010728069921493163L;
-
+    @NonNull
     private String username;
 
     private String password;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author moriarty
@@ -15,9 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(value = "admin-server")//调用哪个微服务
 public interface AdminService {
 
-    @PostMapping(value = "auth/register")
+    @PostMapping(value = "/auth/register")
     public String registerUser(@RequestBody User user);
+
+    @PostMapping("/auth/changePassword")
+    public String changePassword (@RequestBody User user);
 
     @GetMapping("/auth/login")
     public String login();
+
+
 }

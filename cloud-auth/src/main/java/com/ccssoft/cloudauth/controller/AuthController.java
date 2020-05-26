@@ -21,4 +21,9 @@ public class AuthController {
     public String registerUser(@RequestBody User user) {
         return adminService.registerUser(user);
     }
+
+    @PostMapping(value = "/consumer/admin/changePassword")
+    public String changePWD(@RequestBody User user) {
+        return adminService.changePassword(user);
+    }
 }
