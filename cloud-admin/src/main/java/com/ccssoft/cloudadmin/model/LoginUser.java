@@ -1,4 +1,4 @@
-package com.ccssoft.cloudgateway.model;
+package com.ccssoft.cloudadmin.model;
 
 import lombok.Data;
 

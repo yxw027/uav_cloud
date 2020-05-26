@@ -1,4 +1,4 @@
-package com.ccssoft.cloudgateway.exception;
+package com.ccssoft.cloudadmin.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.access.AccessDeniedException;

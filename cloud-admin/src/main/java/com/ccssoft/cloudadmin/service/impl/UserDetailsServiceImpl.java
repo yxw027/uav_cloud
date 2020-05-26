@@ -1,14 +1,13 @@
-package com.ccssoft.cloudgateway.service.Impl;
+package com.ccssoft.cloudadmin.service.impl;
 
-import com.ccssoft.cloudgateway.dao.RoleDao;
-import com.ccssoft.cloudgateway.dao.UserDao;
-import com.ccssoft.cloudgateway.entity.JwtUser;
-import com.ccssoft.cloudgateway.entity.User;
+import com.ccssoft.cloudadmin.dao.RoleDao;
+import com.ccssoft.cloudadmin.dao.UserDao;
+import com.ccssoft.cloudadmin.entity.JwtUser;
+import com.ccssoft.cloudadmin.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 
 /**

@@ -1,7 +1,7 @@
-package com.ccssoft.cloudgateway.filter;
+package com.ccssoft.cloudadmin.filter;
 
-import com.ccssoft.cloudgateway.exception.TokenIsExpiredException;
-import com.ccssoft.cloudgateway.utils.JwtTokenUtils;
+import com.ccssoft.cloudadmin.exception.TokenIsExpiredException;
+import com.ccssoft.cloudadmin.utils.JwtTokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

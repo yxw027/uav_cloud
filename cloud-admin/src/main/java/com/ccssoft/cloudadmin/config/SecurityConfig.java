@@ -1,11 +1,10 @@
-package com.ccssoft.cloudgateway.config;
+package com.ccssoft.cloudadmin.config;
 
-import com.ccssoft.cloudgateway.filter.JWTAuthenticationFilter;
-import com.ccssoft.cloudgateway.filter.JWTAuthorizationFilter;
+import com.ccssoft.cloudadmin.filter.JWTAuthenticationFilter;
+import com.ccssoft.cloudadmin.filter.JWTAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -48,13 +47,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()//关闭跨域防护
+
                 .authorizeRequests()//开启认证请求
-                //只有角色为ADMIN才能删除资源
-                .antMatchers(HttpMethod.DELETE, "/tasks/**").hasRole("ADMIN")
-                // 测试用资源，需要验证了的用户才能访问
-                .antMatchers("/tasks/**").authenticated()
+//                .antMatchers("/tasks/**").authenticated()
+//                .antMatchers("/auth/test").authenticated()
                 // 其他都放行了
-                .anyRequest().permitAll()
+                .antMatchers("/auth/login").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))

@@ -1,4 +1,4 @@
-package com.ccssoft.cloudgateway.exception;
+package com.ccssoft.cloudadmin.exception;
 
 /**
  * @description: 自定义异常

@@ -1,6 +1,6 @@
-package com.ccssoft.cloudgateway.entity;
+package com.ccssoft.cloudadmin.entity;
 
-import com.ccssoft.cloudgateway.dao.RoleDao;
+import com.ccssoft.cloudadmin.dao.RoleDao;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

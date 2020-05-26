@@ -1,9 +1,11 @@
-package com.ccssoft.cloudgateway.service.Impl;
+package com.ccssoft.cloudadmin.service.impl;
 
-import com.ccssoft.cloudgateway.dao.UserDao;
-import com.ccssoft.cloudgateway.entity.User;
-import com.ccssoft.cloudgateway.service.UserService;
+import com.ccssoft.cloudadmin.dao.UserDao;
+import com.ccssoft.cloudadmin.entity.User;
+import com.ccssoft.cloudadmin.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 
 /**

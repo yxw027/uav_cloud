@@ -1,8 +1,9 @@
-package com.ccssoft.cloudgateway.filter;
+package com.ccssoft.cloudadmin.filter;
 
-import com.ccssoft.cloudgateway.entity.JwtUser;
-import com.ccssoft.cloudgateway.model.LoginUser;
-import com.ccssoft.cloudgateway.utils.JwtTokenUtils;
+
+import com.ccssoft.cloudadmin.entity.JwtUser;
+import com.ccssoft.cloudadmin.model.LoginUser;
+import com.ccssoft.cloudadmin.utils.JwtTokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +33,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-        super.setFilterProcessesUrl("/auth/login");
+        super.setFilterProcessesUrl("/auth/authenticate");
     }
 
     /**
@@ -47,7 +48,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 从输入流中获取到登录的信息
         try {
             LoginUser loginUser = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
-            System.out.println(loginUser.toString());
             rememberMe.set(loginUser.getRememberMe() == null ? 0 : loginUser.getRememberMe());
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword(), new ArrayList<>())
@@ -80,6 +80,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 返回创建成功的token
         // 但是这里创建的token只是单纯的token
         // 按照jwt的规定，最后请求的时候应该是 `Bearer token`
+
+        response.setHeader("Access-Control-Expose-Headers",JwtTokenUtils.TOKEN_HEADER);
         response.setHeader("token", JwtTokenUtils.TOKEN_PREFIX + token);
     }
 
