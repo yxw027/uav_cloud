@@ -1,9 +1,9 @@
-package com.ccssoft.cloudadmin.filter;
+package com.ccssoft.cloudauth.filter;
 
-
-import com.ccssoft.cloudadmin.entity.JwtUser;
-import com.ccssoft.cloudadmin.model.LoginUser;
-import com.ccssoft.cloudadmin.utils.JwtTokenUtils;
+import com.ccssoft.cloudauth.dao.UserDao;
+import com.ccssoft.cloudauth.entity.JwtUser;
+import com.ccssoft.cloudauth.model.LoginUser;
+import com.ccssoft.cloudauth.utils.JwtTokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +30,8 @@ import java.util.Collection;
  * @date 2020/5/19 16:51
  */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    @Resource
+    private UserDao userDao;
     private ThreadLocal<Integer> rememberMe = new ThreadLocal<>();
     private AuthenticationManager authenticationManager;
 
@@ -47,6 +51,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         // 从输入流中获取到登录的信息
         try {
+
             LoginUser loginUser = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
             rememberMe.set(loginUser.getRememberMe() == null ? 0 : loginUser.getRememberMe());
             return authenticationManager.authenticate(
@@ -70,6 +75,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         boolean isRemember = rememberMe.get() == 1;
 
         String role = "";
+        //之前在JwtUser中存了权限的信息，可以直接获取，只有一个角色
         Collection<? extends GrantedAuthority> authorities = jwtUser.getAuthorities();
         for (GrantedAuthority authority : authorities){
             role = authority.getAuthority();

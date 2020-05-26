@@ -1,4 +1,4 @@
-package com.ccssoft.cloudadmin.utils;
+package com.ccssoft.cloudauth.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -34,6 +34,7 @@ public class JwtTokenUtils {
         map.put(ROLE_CLAIMS, role);
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, SECRET)
+                //放入权限相关
                 .setClaims(map)
                 .setIssuer(ISS)
                 .setSubject(username)

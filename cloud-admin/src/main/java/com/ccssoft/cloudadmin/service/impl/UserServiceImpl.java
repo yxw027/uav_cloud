@@ -31,4 +31,9 @@ public class UserServiceImpl implements UserService {
     public String getSaltByUsername(String username) {
         return userDao.getSaltByUsername(username);
     }
+
+    @Override
+    public int updatePassword(User user) {
+        return userDao.updatePasswordByUsername(user.getUsername(),user.getPassword());
+    }
 }

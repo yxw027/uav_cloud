@@ -1,14 +1,13 @@
-package com.ccssoft.cloudadmin.filter;
+package com.ccssoft.cloudauth.filter;
 
-import com.ccssoft.cloudadmin.exception.TokenIsExpiredException;
-import com.ccssoft.cloudadmin.utils.JwtTokenUtils;
+import com.ccssoft.cloudauth.exception.TokenIsExpiredException;
+import com.ccssoft.cloudauth.utils.JwtTokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

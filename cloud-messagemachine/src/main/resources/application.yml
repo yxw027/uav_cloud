@@ -1,5 +1,5 @@
 server:
-  port: 8002
+  port: 10001
 
 mina-port: 7020
 spring:

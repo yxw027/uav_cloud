@@ -13,4 +13,5 @@ public interface UserService {
 
     String getSaltByUsername(String username);
 
+    int updatePassword(User user);
 }

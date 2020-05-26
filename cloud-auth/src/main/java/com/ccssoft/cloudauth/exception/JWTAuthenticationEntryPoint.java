@@ -1,4 +1,4 @@
-package com.ccssoft.cloudadmin.exception;
+package com.ccssoft.cloudauth.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;
@@ -23,7 +23,7 @@ public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        String reason = "不好意思，无法访问，原因：" + authException.getMessage();
+        String reason = "不好意思，请登录，原因：" + authException.getMessage();
         response.getWriter().write(new ObjectMapper().writeValueAsString(reason));
     }
 }

@@ -1,7 +1,9 @@
-package com.ccssoft.cloudadmin.config;
+package com.ccssoft.cloudauth.config;
 
-import com.ccssoft.cloudadmin.filter.JWTAuthenticationFilter;
-import com.ccssoft.cloudadmin.filter.JWTAuthorizationFilter;
+import com.ccssoft.cloudauth.exception.JWTAccessDeniedHandler;
+import com.ccssoft.cloudauth.exception.JWTAuthenticationEntryPoint;
+import com.ccssoft.cloudauth.filter.JWTAuthenticationFilter;
+import com.ccssoft.cloudauth.filter.JWTAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -52,16 +54,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/tasks/**").authenticated()
 //                .antMatchers("/auth/test").authenticated()
                 // 其他都放行了
-                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/consumer/admin/login").permitAll()
+                .antMatchers("/auth/*").permitAll()
+//                .antMatchers(HttpMethod.DELETE, "/tasks/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 // 不需要session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//                .and()
-//                .exceptionHandling().authenticationEntryPoint(new JWTAuthenticationEntryPoint());
-//                .accessDeniedHandler(new JWTAccessDeniedHandler());      //添加无权限时的处理
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                //添加没登录时的处理
+                .exceptionHandling().authenticationEntryPoint(new JWTAuthenticationEntryPoint())
+                //添加无权限时的处理
+                .accessDeniedHandler(new JWTAccessDeniedHandler());
 
     }
 

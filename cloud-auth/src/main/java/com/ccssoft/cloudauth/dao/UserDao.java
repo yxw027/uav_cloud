@@ -1,8 +1,7 @@
-package com.ccssoft.cloudadmin.dao;
+package com.ccssoft.cloudauth.dao;
 
-import com.ccssoft.cloudadmin.entity.User;
+import com.ccssoft.cloudauth.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * @author moriarty
@@ -17,7 +16,5 @@ public interface UserDao {
     int saveUserToDB(User user);
 
     String getSaltByUsername(String username);
-
-    int updatePasswordByUsername(@Param("username") String username, @Param("password") String password);
 }
 

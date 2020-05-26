@@ -10,12 +10,18 @@ spring:
         server-addr: 183.56.219.211:8848
     gateway:
       routes: #越精确的断言规则越往前提，才能先拦截
+        - id: turn_route #没有分离单纯为了跳转
+          uri: lb://admin-server
+          predicates:
+            - Path=/api/admin/login
+          filters:
+            - RewritePath=/api/admin/(?<segment>.*), /auth/$\{segment}
         - id: admin_route
-          uri: lb://admin-server #负载均衡到注册中心去找对应服务名的项目
+          uri: lb://auth-server-consumer #负载均衡到注册中心去找对应服务名的项目
           predicates:
             - Path=/api/admin/*
           filters: #重写路径
-            - RewritePath=/api/admin/(?<segment>.*), /auth/$\{segment}
+            - RewritePath=/api/(?<segment>.*), /consumer/$\{segment}
 
   application:
     name: cloud-gateway

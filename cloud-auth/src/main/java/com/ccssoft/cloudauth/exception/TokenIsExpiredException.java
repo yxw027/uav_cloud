@@ -1,4 +1,4 @@
-package com.ccssoft.cloudadmin.exception;
+package com.ccssoft.cloudauth.exception;
 
 /**
  * @description: 自定义异常

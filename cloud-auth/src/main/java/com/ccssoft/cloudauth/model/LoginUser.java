@@ -1,4 +1,4 @@
-package com.ccssoft.cloudadmin.model;
+package com.ccssoft.cloudauth.model;
 
 import lombok.Data;
 

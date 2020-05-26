@@ -1,9 +1,9 @@
-package com.ccssoft.cloudadmin.service.impl;
+package com.ccssoft.cloudauth.service;
 
-import com.ccssoft.cloudadmin.dao.RoleDao;
-import com.ccssoft.cloudadmin.dao.UserDao;
-import com.ccssoft.cloudadmin.entity.JwtUser;
-import com.ccssoft.cloudadmin.entity.User;
+import com.ccssoft.cloudauth.dao.RoleDao;
+import com.ccssoft.cloudauth.dao.UserDao;
+import com.ccssoft.cloudauth.entity.JwtUser;
+import com.ccssoft.cloudauth.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
