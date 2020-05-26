@@ -1,6 +1,5 @@
 package com.ccssoft.cloudgateway.config;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -9,7 +8,7 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 /**
  * @author moriarty
- * @date 2020/5/21 17:22
+ * @date 2020/5/26 15:06
  */
 @Configuration
 public class CorsConfig {

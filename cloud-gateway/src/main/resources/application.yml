@@ -4,3 +4,37 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 183.56.219.211:8848
+    gateway:
+      routes: #越精确的断言规则越往前提，才能先拦截
+        - id: turn_route #没有分离单纯为了跳转
+          uri: lb://admin-server
+          predicates:
+            - Path=/api/admin/login
+          filters:
+            - RewritePath=/api/admin/(?<segment>.*), /auth/$\{segment}
+        - id: admin_route
+          uri: lb://auth-server-consumer #负载均衡到注册中心去找对应服务名的项目
+          predicates:
+            - Path=/api/admin/*
+          filters: #重写路径
+            - RewritePath=/api/(?<segment>.*), /consumer/$\{segment}
+
+  application:
+    name: cloud-gateway
+
+
+mybatis-plus:
+  type-aliases-package: com.ccssoft.cloudgateway.model
+  mapper-locations: classpath:mybatis-mappers/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 1 #逻辑删除
+      logic-not-delete-value: 0 #逻辑未删除
+
+server:
+  port: 8080

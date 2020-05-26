@@ -1,24 +1,5 @@
-server:
-  port: 8080
-
 spring:
   cloud:
     nacos:
-      discovery:
-        server-addr: 183.56.219.211:8848
       config:
         server-addr: 183.56.219.211:8848
-    gateway:
-      routes: #越精确的断言规则越往前提，才能先拦截
-        - id: admin_route
-  #        uri: lb://admin-server #负载均衡到注册中心去找对应服务名的项目
-          uri: https://www.baidu.com/
-          predicates:
-            - Path=/baidu
-#        filters: #重写路径
-#          - RewritePath=/api/admin/(?<segment>.*), /$\{segment}
-#      discovery:
-#        locator:
-#          enabled: true
-  application:
-    name: cloud-gateway
